@@ -1,0 +1,60 @@
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+    output = "/home/ubuntu/robert_tech_image_creator/nextjs_space/node_modules/.prisma/client"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model CharacterSet {
+  id          String              @id @default(cuid())
+  name        String
+  description String?
+  samplePrompts String[]          @default([])
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  references  CharacterReference[]
+  generations Generation[]
+
+  @@index([createdAt])
+}
+
+model CharacterReference {
+  id              String       @id @default(cuid())
+  characterSetId  String
+  cloudStoragePath String      // S3 key for the reference image
+  order           Int          // 1, 2, or 3 (for the 3 reference images)
+  originalName    String
+  uploadedAt      DateTime     @default(now())
+  characterSet    CharacterSet @relation(fields: [characterSetId], references: [id], onDelete: Cascade)
+
+  @@index([characterSetId])
+}
+
+model Generation {
+  id             String             @id @default(cuid())
+  characterSetId String?
+  aspectRatio    String             // "16:9", "1:1", "9:16", "4:3"
+  createdAt      DateTime           @default(now())
+  characterSet   CharacterSet?      @relation(fields: [characterSetId], references: [id], onDelete: SetNull)
+  images         GeneratedImage[]
+
+  @@index([createdAt])
+  @@index([characterSetId])
+}
+
+model GeneratedImage {
+  id               String     @id @default(cuid())
+  generationId     String
+  prompt           String     @db.Text
+  cloudStoragePath String     // S3 key for the generated image
+  order            Int        // Order in the batch
+  generatedAt      DateTime   @default(now())
+  generation       Generation @relation(fields: [generationId], references: [id], onDelete: Cascade)
+
+  @@index([generationId])
+  @@index([generatedAt])
+}
