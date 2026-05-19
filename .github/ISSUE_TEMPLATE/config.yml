@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 Documentation
+    url: https://github.com/your-org/AI-Character-Generator#readme
+    about: Check the documentation before creating an issue
+  - name: 💬 Discussions
+    url: https://github.com/your-org/AI-Character-Generator/discussions
+    about: Ask questions and share ideas in discussions
+  - name: 🚨 Security Issues
+    url: https://github.com/your-org/AI-Character-Generator/security/advisories/new
+    about: Please report security vulnerabilities here
