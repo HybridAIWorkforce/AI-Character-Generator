@@ -79,7 +79,7 @@ ehthumbs.db
 .project_instructions.md
 
 # Docker
-.dockerignore
+# .dockerignore - intentionally tracked for Docker builds
 
 # CI/CD artifacts
 .github/workflows/*.local.yml
