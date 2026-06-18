@@ -31,7 +31,7 @@ jobs:
       image_digest: ${{ steps.build.outputs.digest }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
@@ -75,7 +75,7 @@ jobs:
       url: https://staging.ai-character-generator.example.com
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Deploy to Staging
         run: |
@@ -95,7 +95,7 @@ jobs:
       url: https://ai-character-generator.example.com
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Deploy to Production
         run: |
